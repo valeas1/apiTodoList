@@ -131,10 +131,13 @@ let TODOS = [
 app.get('/api/todos/', (req, res) => {
     res.status(200).json(TODOS);
 });
-
+app.get('/api/todos/:id', (req, res) => {
+    const idx = TODOS.findIndex((item) => item.id === +req.params.id);
+    res.status(200).json(TODOS[idx]);
+});
 //POST
 app.post('/api/todos/', (req, res) => {
-    const todo = { ...req.body, id: new Date().getTime() };
+    const todo = { ...req.body, id: new Date().getTime(), completed: false, editable: false, userId: 1 };
     TODOS.push(todo);
     res.status(201).json(todo);
 });

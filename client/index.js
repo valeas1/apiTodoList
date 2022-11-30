@@ -131,8 +131,6 @@ async function addTaskToArray(event) {
     if (!event.target.previousElementSibling.value.trim()) return;
     let task = {
         title: event.target.previousElementSibling.value,
-        completed: false,
-        editable: false,
     };
     await postTask(task);
     renderLi(arrayTasks);
@@ -227,7 +225,7 @@ function sortForId(event) {
 
 async function showDatailsTask(event) {
     let id = event.target.parentElement.dataset.id;
-    await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    await fetch(`api/todos/${id}`)
         .then((response) => {
             if (response.ok) {
                 return response.json();
@@ -264,10 +262,7 @@ async function postTask(task) {
     await fetch('api/todos', {
         method: 'POST',
         body: JSON.stringify({
-            userId: 1,
             title: task.title,
-            completed: false,
-            editable: false,
         }),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
